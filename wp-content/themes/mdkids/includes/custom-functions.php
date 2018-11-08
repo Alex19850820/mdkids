@@ -12,13 +12,12 @@ add_action( 'wp_ajax_nopriv_get_next_page', 'get_next_page' );
 add_action( 'wp_ajax_sendForm', 'sendForm' );
 add_action( 'wp_ajax_nopriv_sendForm', 'sendForm' );
 //
-function get_next_page () { ?>
-	<?php $blogQuery = new WP_Query( [
+function get_next_page () {
+	 $blogQuery = new WP_Query( [
 		'category_name'  => $_POST['cat'],
 		'posts_per_page' => 1,
 		'paged'          => $_POST['page'],
 	] );
-	$contacts = fw_get_db_customizer_option();
 	?>
 <?php $z = 0; while ( $blogQuery->have_posts() ) { $z++; $blogQuery->the_post();  ?>
 	<div class="main-news-items__item">

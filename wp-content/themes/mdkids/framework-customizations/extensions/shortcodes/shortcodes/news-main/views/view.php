@@ -7,7 +7,7 @@
  *@var $atts array
  *
  **/
-
+$contacts = fw_get_db_customizer_option();
 $cat_name = get_query_var('name');
 ?>
 <section class="news"><hr class="pages-hr"/>
@@ -19,18 +19,13 @@ $cat_name = get_query_var('name');
 		</div><hr/>
 	</div>
 	<div class="container">
-		<?php
-		
-		$blogQuery = new WP_Query([
-			'category_name' => 'news',
-			'posts_per_page' => 1,
-			'paged' => $_GET['cur_p'],
-		]);
-		$contacts = fw_get_db_customizer_option();
-		
-		?>
 		<div class="main-news-items m-1">
-			<?php $z = 0; while ( $blogQuery->have_posts() ) { $z++; $blogQuery->the_post();  ?>
+			<?php $blogQuery = new WP_Query([
+				'category_name' => 'news',
+				'posts_per_page' => 1,
+				'paged' => $_GET['cur_p'] ?? 1,
+			]);?>
+			<?php while ( $blogQuery->have_posts() ) :  $blogQuery->the_post();  ?>
 				<div class="main-news-items__item">
 					<div class="main-news-items__item__image">
 						<img src="<?php the_post_thumbnail_url(); ?>" alt="" role="presentation"/>
@@ -51,42 +46,40 @@ $cat_name = get_query_var('name');
 						</a>
 					</div>
 				</div>
-			<?}?>
+			<?php endwhile;?>
 		</div>
 		<div class="pagination">
-			<?php
-				$arr = get_the_category($post->ID);
-				foreach ($arr as $news) {
-					if($news->slug == $cat_name) {
-						$count = $news->count;
-					}
-				}
-				if($count) {
-					$n = ceil($count/1);
-				} else {
-					$n = ceil(get_the_category($post->ID)[0]->category_count/1);
-				}
-			?>
-			
+			<?php $n = getPagination($post, 1); ?>
 			<ul class="pagination__ul">
-				<li class="pagination__ul__prev"><a href="#">Предыдущая</a>
+				<li class="pagination__ul__prev">
+					<a href="#" id="move_page_left" data-cat="<?=$cat_name?>" data-all="<?=$n?>" data-np="<?=$_GET['cur_p'] ?? 1 ?>">Предыдущая</a>
 				</li>
-				<?php for($i=1; $i<= $n; $i++):?>
+				<?php for($i=1; $i <= $n; $i++):?>
 					<li class="pagination__ul__li">
-						<a href="#" id="next" data-page="<?=$i?>" data-cat="<?=$cat_name?>" >
+						<a href="#" id="next" data-page="<?=$i?>" data-cat="<?=$cat_name?>">
 							<?=$i?>
 						</a>
 					</li>
 				<?php endfor;?>
-				<li class="pagination__ul__next"><a href="#">Следующая</a>
+				<li class="pagination__ul__next" >
+					<a href="#" id="move_page_right" data-cat="<?=$cat_name?>" data-all="<?=$n?>" data-np="<?=$_GET['cur_p'] ?? 1?>">Следующая</a>
 				</li>
 			</ul>
 		</div>
 	</div>
 </section>
-<script type="text/javascript">
-	changeHash(<?=$_GET['cur_p'] ?? 1?>);
-	var button = $('[data-page=<?=$_GET['cur_p'] ?? 1?>]');
-	// button.addClass("pagination-active");
-	button.parent('li').addClass("pagination-active");
-</script>
+<?php function getPagination($post = [], $p) {
+	$count = '';
+	$arr = get_the_category($post->ID);
+	foreach ($arr as $item) {
+		if($item->slug == 'news') {
+			$count = $item->category_count;
+		}
+	}
+	if($count) {
+		$n = ceil($count/$p);
+	} else {
+		$n = ceil(get_the_category($post->ID)[0]->category_count/$p);
+	}
+	return $n;
+}?>
