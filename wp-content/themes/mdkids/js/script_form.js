@@ -76,7 +76,7 @@ $(document).on('click', '#next', function (e) {
 	} else {
 		right.css({'opacity':'1', 'pointer-events':'auto'});
 	}
-	if(count == 1) {
+	if(count === 1) {
 		left.css({'opacity':'0.5', 'pointer-events':'none'});
 		right.css({'opacity':'1', 'pointer-events':'auto'});
 	}
@@ -153,7 +153,6 @@ function getPageByPagination(button, n) {
 	}
 	right.attr('data-np', count);
 	left.attr('data-np', count);
-
 	form_data.append('action', 'get_next_page');
 	form_data.append('page', count);
 	form_data.append('cat', cat);
