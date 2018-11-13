@@ -111,7 +111,8 @@ $breadcrumbs = '<div class="breadcrumbs">
 		<?php // Восстанавливаем оригинальные данные поста
 		wp_reset_postdata();?>
 		<div class="container">
-			<div class="collections-items similar-items jsSliderProduct">
+<!--			<div class="collections-items similar-items jsSliderProduct">-->
+			<div class="similar-items jsSliderProduct">
 				<?php
 				$cur_id = get_the_category( $post->ID );
 				$products = new WP_Query([

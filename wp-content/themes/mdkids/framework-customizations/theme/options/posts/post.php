@@ -17,16 +17,6 @@ $options = array(
 //				'label' => __('Body Color', '{domain}'),
 //				'value' => '#ADFF2F',
 //			),
-			'price_old' => [
-				'type' => 'text',
-				'label' => __('Цена старая', '{domain}'),
-				'value' => '',
-			],
-			'price_new' => [
-				'type' => 'text',
-				'label' => __('Цена новая', '{domain}'),
-				'value' => '',
-			],
 			'description' => [
 				'type' => 'textarea',
 				'label' => __('Описание', '{domain}'),
@@ -42,6 +32,25 @@ $options = array(
 				'label' => __('Картинка новости 2', '{domain}'),
 				'value' => '',
 				'images_only' => true,
+			],
+			'label_product' => array(
+				'type'  => 'html',
+				'value' => 'default hidden value',
+				'attr'  => array( 'class' => 'custom-class', 'data-foo' => 'bar' ),
+				'label' => __(' ', '{domain}'),
+//				'desc'  => __('Description', '{domain}'),
+//				'help'  => __('Help tip', '{domain}'),
+				'html'  => '<h3>Пункты для товара</h3>',
+			),
+			'price_old' => [
+				'type' => 'text',
+				'label' => __('Цена старая', '{domain}'),
+				'value' => '',
+			],
+			'price_new' => [
+				'type' => 'text',
+				'label' => __('Цена новая', '{domain}'),
+				'value' => '',
 			],
 			'article' => [
 				'type' => 'text',
