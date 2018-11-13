@@ -131,6 +131,11 @@ function mdkids_scripts() {
 	//	wp_enqueue_style( 'horizon-style', get_stylesheet_uri() );
 //	wp_enqueue_style( 'mdkids-style', get_stylesheet_uri() );
 	
+	wp_enqueue_style( 'mdkids-photoswipe-css', 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css', [] );
+	wp_enqueue_style( 'mdkids-photoswipe-default', 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css', [] );
+	
+	wp_enqueue_style( 'mdkids-slick-css', get_template_directory_uri() . '/assets/css/slick.css', [] );
+	
 	wp_enqueue_style( 'mdkids-fonts', get_template_directory_uri() . '/assets/fonts/fonts.css', [] );
 	
 	wp_enqueue_style( 'mdkids-styles', get_template_directory_uri() . '/assets/css/style.css', [] );
@@ -151,6 +156,9 @@ function mdkids_scripts() {
 //	wp_enqueue_script( 'mdkids-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', [], '20151215', true );
 	
 	wp_enqueue_script( 'mdkids-js-jq', get_template_directory_uri() . '/assets/js/jquery-3.2.1.min.js', [], '', true );
+	wp_enqueue_script( 'mdkids-js-photoswipe', 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js', [], '', true );
+	wp_enqueue_script( 'mdkids-js-photoswipe-ui', 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js', [], '', true );
+	wp_enqueue_script( 'mdkids-js-slick', get_template_directory_uri() . '/assets/js/slick.min.js', [], '', true );
 	wp_enqueue_script( 'mdkids-js-jq_dot', get_template_directory_uri() . '/assets/js/jquery.dotdotdot.js', [], '', true );
 	wp_enqueue_script( 'mdkids-js-script', get_template_directory_uri() . '/assets/js/script.js', [], '', true );
 	wp_enqueue_script( 'mdkids-js-myscript', get_template_directory_uri() . '/js/script_form.js', [], '', true );

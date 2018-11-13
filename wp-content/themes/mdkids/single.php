@@ -25,19 +25,71 @@ $breadcrumbs = '<div class="breadcrumbs">
 						</span>
 						<span class="separator"><i class="fas fa-chevron-right"></i></span>'.$match[0][0].'</div>';
 ?>
-	<!-- start inside-crumbs.html-->
-	<section class="crumbs">
-		<ul class="crumbs__link">
-			<?=$breadcrumbs?><a name="map"></a>
-		</ul>
+	<section class="single-news">
+		<hr class="pages-hr"/>
+		<div class="container m-1">
+			<div class="news-block m-1">
+			<h3 class="news-block__head">
+				<?php the_title();?>
+			</h3>
+			<img class="news-block__image-left" src="<?php the_post_thumbnail_url()?>" alt="" role="presentation"/>
+			<p class="news-block__text">
+				<?=fw_get_db_post_option($post->ID, 'description')?>
+			</p>
+			<img class="news-block__image-right" src="<?=fw_get_db_post_option($post->ID, 'img')['url']?>" alt="" role="presentation"/>
+				<p class="news-block__text">
+					<?=fw_get_db_post_option($post->ID, 'description2')?>
+				</p>
+<!--				<div class="blog__content">-->
+<!--				-->
+<!--				--><?php //while ( have_posts() ) : the_post();
+//					get_template_part( 'template-parts/content', get_post_type() );
+//					/*the_post_navigation();*/
+//				endwhile; ?>
+<!--			</div>-->
+			</div>
+		</div>
+		<div class="head"><hr class="head__big-head"/>
+			<div class="head__circle">
+			</div>
+			<h2>
+				Другие новости
+			</h2>
+			<div class="head__circle">
+			</div><hr class="head__big-head"/>
+		</div>
+		<div class="container">
+			<div class="main-news-items m-1">
+				<?php $blogQuery = new WP_Query([
+					'category_name' => 'news',
+					'posts_per_page' => 3,
+//					'paged' => $_GET['cur_p'] ?? 1,
+				]);?>
+				<?php while ( $blogQuery->have_posts() ) :  $blogQuery->the_post();  ?>
+					<div class="main-news-items__item">
+						<div class="main-news-items__item__image">
+							<img src="<?php the_post_thumbnail_url(); ?>" alt="" role="presentation"/>
+						</div>
+						<p>
+							<?php the_title(); ?>
+						</p>
+						<span class="mainNewsDot">
+						<?=fw_get_db_post_option($blogQuery->post->ID, 'description')?>
+                    </span>
+						<div class="main-news-items__item__links">
+							<a href="<?php the_permalink(); ?>">Подробрее
+								<img src="<?php bloginfo('template_url')?>/assets/images/icons/right-arrow.svg" alt="" width="12" height="8" role="presentation"/>
+							</a>
+							<time><?=get_the_date('d.m.Y')?></time>
+							<a href="">
+								<img src="<?php bloginfo('template_url')?>/assets/images/icons/share.svg" alt="" width="25" height="25" role="presentation"/>
+							</a>
+						</div>
+					</div>
+				<?php endwhile;?>
+			</div>
+		</div>
 	</section>
-	<!-- end inside-crumbs.html-->
-	<div class="blog__content">
-		<?php while ( have_posts() ) : the_post();
-			get_template_part( 'template-parts/content', get_post_type() );
-			/*the_post_navigation();*/
-		endwhile; ?>
-	</div>
 <?php
 get_footer();
 ?>
