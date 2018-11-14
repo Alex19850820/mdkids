@@ -82,7 +82,7 @@ foreach (get_categories() as $item) {
 				<ul class="drop-menu jsDropClose">
 					<?php foreach ($category as $key => $value):?>
 						<li>
-							<a href="category/<?=$key?>"><?=$value?></a>
+							<a href="/category/<?=$key?>"><?=$value?></a>
 						</li>
 					<?php endforeach;?>
 				</ul>
