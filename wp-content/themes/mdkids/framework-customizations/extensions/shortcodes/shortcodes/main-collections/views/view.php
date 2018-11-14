@@ -7,29 +7,40 @@
  *@var $atts array
  *
  **/
-
+$category_products = [];
+foreach (get_categories() as $item) {
+	if($item->slug != 'news'&&$item->name != 'Без рубрики' ){
+		$category_products[$item->slug] = ['name' => $item->name, 'count' => $item->count, 'img' => get_term_thumbnail($item->term_id, $size = 'post-thumbnail', $attr = '')];
+	}
+}
 ?>
 <div class="collections">
 	<div class="head"><hr/>
 		<div class="head__circle">
 		</div>
-		<h2>Коллекции
+		<h2>
+			Коллекции
 		</h2>
 		<div class="head__circle">
 		</div><hr/>
 	</div>
 	<div class="container">
-		<div class="collections-items"><a class="collections-items__item" href="#"><span class="collections-items__item__image"><img src="<?php bloginfo('template_url')?>/assets/images/collections_item_1.png" alt="" role="presentation"/></span><span class="collections-items__item__text">
-          <h3>Серьги
-          </h3><span>15 продуктов</span></span></a><a class="collections-items__item" href="#"><span class="collections-items__item__image"><img src="<?php bloginfo('template_url')?>/assets/images/collections_item_2.png" alt="" role="presentation"/></span><span class="collections-items__item__text">
-          <h3>Подвески
-          </h3><span>47 продуктов</span></span></a><a class="collections-items__item" href="#"><span class="collections-items__item__image"><img src="<?php bloginfo('template_url')?>/assets/images/collections_item_3.png" alt="" role="presentation"/></span><span class="collections-items__item__text">
-          <h3>Браслеты
-          </h3><span>33 продуктов</span></span></a><a class="collections-items__item" href="#"><span class="collections-items__item__image"><img src="<?php bloginfo('template_url')?>/assets/images/collections_item_4.png" alt="" role="presentation"/></span><span class="collections-items__item__text">
-          <h3>Цепочки
-          </h3><span>15 продуктов</span></span></a><a class="collections-items__item" href="#"><span class="collections-items__item__image"><img src="<?php bloginfo('template_url')?>/assets/images/collections_item_5.png" alt="" role="presentation"/></span><span class="collections-items__item__text">
-          <h3>Гайтаны
-          </h3><span>47 продуктов</span></span></a>
+		<div class="collections-items">
+			<?php foreach ($category_products as $k => $v):?>
+				<a class="collections-items__item" href="/category/<?=$k?>">
+					<span class="collections-items__item__image">
+						<?=$v['img']?>
+					</span>
+					<span class="collections-items__item__text">
+						<h3>
+							<?=$v['name']?>
+						</h3>
+						<span>
+							<?=$v['count']?> продуктов
+						</span>
+					</span>
+				</a>
+			<?php endforeach;?>
 		</div>
 	</div>
 </div>

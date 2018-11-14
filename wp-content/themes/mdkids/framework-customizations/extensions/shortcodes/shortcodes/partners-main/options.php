@@ -8,6 +8,34 @@
 $options = [
 //    //ключ - slug опции, к которому будем обращаться во view
     //значение - массив конфигураций для опции
+	
+		'partners' => [
+			'type' => 'addable-popup',
+			'label' => __('Добавить партнера', '{domain}'),
+			'template' => '{{- h3 }}',
+			'size' => 'large', // small, medium, large
+			'limit' => 0, // limit the number of popup`s that can be added
+			'add-button-text' => __('добавить', '{domain}'),
+			'sortable' => true,
+			'popup-options' => [
+				'h3'     => [
+					'type'  => 'text',
+					'value' => 'Airbnb',
+					'label' => __('Заголовок', '{domain}'),
+				],
+				'text'     => [
+					'type'  => 'textarea',
+					'value' => '',
+					'label' => __('Заголовок', '{domain}'),
+				],
+				'img'     => [
+					'type'  => 'upload',
+					'value' => '',
+					'label' => __('Добавить картинку', '{domain}'),
+					'images_only' => true,
+				],
+			]
+		],
 	/*'title'     => [
 		'type'  => 'text',
 		'value' => 'наши результаты',

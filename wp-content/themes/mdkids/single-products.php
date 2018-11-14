@@ -97,6 +97,7 @@ $breadcrumbs = '<div class="breadcrumbs">
 		</div>
 	</section>
 	<section class="similar-products">
+		<input type="hidden" id="prodPath" value="<?php bloginfo('template_url')?>">
 		<div class="head m-1">
 			<hr class="head__big-head"/>
 			<div class="head__circle">
@@ -111,13 +112,12 @@ $breadcrumbs = '<div class="breadcrumbs">
 		<?php // Восстанавливаем оригинальные данные поста
 		wp_reset_postdata();?>
 		<div class="container">
-<!--			<div class="collections-items similar-items jsSliderProduct">-->
-			<div class="similar-items jsSliderProduct">
+			<div class="collections-items similar-items jsSliderProduct">
 				<?php
 				$cur_id = get_the_category( $post->ID );
 				$products = new WP_Query([
 					'category_name' => $cur_id[0]->slug,
-					'posts_per_page' => 3,
+					'posts_per_page' => 10,
 //					'paged' => $_GET['cur_p'] ?? 1,
 				]);
 				?>

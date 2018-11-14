@@ -8,6 +8,27 @@
 $options = [
 //    //ключ - slug опции, к которому будем обращаться во view
     //значение - массив конфигураций для опции
+	'h2'     => [
+		'type'  => 'text',
+		'value' => 'О бренде',
+		'label' => __('Заголовок', '{domain}'),
+	],
+	'title'     => [
+		'type'  => 'text',
+		'value' => '',
+		'label' => __('Заголовок текста', '{domain}'),
+	],
+	'description'     => [
+		'type'  => 'textarea',
+		'value' => '',
+		'label' => __('Текст', '{domain}'),
+	],
+	'img'     => [
+		'type'  => 'upload',
+		'value' => '',
+		'label' => __('Добавить картинку', '{domain}'),
+		'images_only' => true,
+	],
 	/*'title'     => [
 		'type'  => 'text',
 		'value' => 'наши результаты',

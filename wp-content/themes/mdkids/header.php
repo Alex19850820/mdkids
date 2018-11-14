@@ -9,6 +9,12 @@
  * @package mdkids
  */
 $contacts = fw_get_db_customizer_option();
+$category = [];
+foreach (get_categories() as $item) {
+	if($item->slug != 'news'&&$item->name != 'Без рубрики' ){
+		$category[$item->slug] = $item->name;
+	}
+}
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -25,7 +31,7 @@ $contacts = fw_get_db_customizer_option();
 <header class="header">
 	<div class="header-contacts">
 		<div class="header-contacts__left">
-			<a href="tel:<?=$contacts['phone']?>">
+			<a href="tel:<?=preg_replace('![^0-9+]+!', '', $contacts['phone'])?>">
 				<?=$contacts['phone']?>
 				<img src="<?php bloginfo('template_url')?>/assets/images/icons/call-answer.svg" alt="" role="presentation"/>
 			</a>
@@ -53,49 +59,49 @@ $contacts = fw_get_db_customizer_option();
 			</li>
 			<li class="mob-login"><a href="#">Регистрация</a>
 			</li>
-			<li class="pc-item"><a href="about-brand">о бренде</a>
+			<li class="pc-item"><a href="/about-brand">о бренде</a>
 			</li>
 			<li class="mob-item jsParentDropMenu">
 				<p class="jsDropOpen">о компании<img src="<?php bloginfo('template_url')?>/assets/images/arrow.png" alt=""/>
 				</p>
 				<ul class="drop-menu jsDropClose">
-					<li><a href="about-brand">о бренде</a>
+					<li><a href="/about-brand">о бренде</a>
 					</li>
-					<li><a href="partners">партнеры</a>
+					<li><a href="/partners">партнеры</a>
 					</li>
-					<li><a href="news">новости</a>
+					<li><a href="/news">новости</a>
 					</li>
 				</ul>
 			</li>
 			<li class="jsParentDropMenu">
-				<p class="hover-menu jsDropOpen">коллекции<img src="<?php bloginfo('template_url')?>/assets/images/arrow.png" alt=""/><img src="<?php bloginfo('template_url')?>/assets/images/icons/down-arrow.svg" alt=""/>
+				<p class="hover-menu jsDropOpen">
+					коллекции
+					<img src="<?php bloginfo( 'template_url' ) ?>/assets/images/arrow.png" alt=""/>
+					<img src="<?php bloginfo( 'template_url' ) ?>/assets/images/icons/down-arrow.svg" alt=""/>
 				</p>
 				<ul class="drop-menu jsDropClose">
-					<li><a href="category">Серьги</a>
-					</li>
-					<li><a href="category">Подвески</a>
-					</li>
-					<li><a href="category">Браслеты</a>
-					</li>
-					<li><a href="category">Цепочки</a>
-					</li>
-					<li><a href="category">Гайтаны</a>
-					</li>
+					<?php foreach ($category as $key => $value):?>
+						<li>
+							<a href="category/<?=$key?>"><?=$value?></a>
+						</li>
+					<?php endforeach;?>
 				</ul>
 			</li>
-			<li class="pc-item"><a href="partners">партнеры</a>
+			<li class="pc-item"><a href="/partners">партнеры</a>
 			</li>
-			<li class="pc-item"><a href="news">новости</a>
+			<li class="pc-item"><a href="/news">новости</a>
 			</li>
-			<li><a href="contacts">контакты</a>
+			<li><a href="/contacts">контакты</a>
 			</li>
 		</ul><a href="/"><img src="<?php bloginfo('template_url')?>/assets/images/icons/logo.svg" alt="" role="presentation"/></a>
 		<div class="nav-menu__right">
 			<div class="nav-menu__right__land">
 				<select>
-					<option>Rus
+					<option>
+						Rus
 					</option>
-					<option>En
+					<option>
+						En
 					</option>
 				</select>
 			</div>

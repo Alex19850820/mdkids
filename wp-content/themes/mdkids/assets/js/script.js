@@ -66,40 +66,6 @@ window.onload = function (e) {
 	});
 };
 
-jQuery(document).ready(function ($) {
-dotDot();
-});
-function dotDot() {
-	$(".mainNewsDot").dotdotdot({
-		callback: function callback(isTruncated) {},
-		/* Function invoked after truncating the text.
-		   Inside this function, "this" refers to the wrapper. */
-
-		ellipsis: '\u2026 ',
-		/* The text to add as ellipsis. */
-
-		height: 120,
-		/* The (max-)height for the wrapper:
-		   null: measure the CSS (max-)height ones;
-		   a number: sets a specific height in pixels;
-		   "watch": re-measures the CSS (max-)height in the "watch". */
-
-		keep: null,
-		/* jQuery-selector for elements to keep after the ellipsis. */
-
-		tolerance: 0,
-		/* Deviation for the measured wrapper height. */
-
-		truncate: "word",
-		/* How to truncate the text: By "node", "word" or "letter". */
-
-		watch: "window"
-		/* Whether to update the ellipsis:
-		   true: Monitors the wrapper width and height;
-		   "window": Monitors the window width and height. */
-	});
-}
-
 $('.jsForSlider').slick({
 	slidesToShow: 1,
 	slidesToScroll: 1,
@@ -315,15 +281,15 @@ var initPhotoSwipeFromDOM = function initPhotoSwipeFromDOM(gallerySelector) {
 
 // execute above function
 initPhotoSwipeFromDOM('.jsForSlider');
-
+var prodPathUrl = $('#prodPath').val();
 $('.jsSliderProduct').slick({
 	dots: false,
 	infinite: false,
 	speed: 300,
 	slidesToShow: 3,
 	slidesToScroll: 1,
-	prevArrow: '<button type="button" class="slick-prev"><img src="assets/images/arrow_next.png" alt=""></button>',
-	nextArrow: '<button type="button" class="slick-next"><img src="assets/images/arrow_next.png" alt=""></button>',
+	prevArrow: '<button type="button" class="slick-prev"><img src="' + prodPathUrl + '/assets/images/arrow_next.png" alt=""></button>',
+	nextArrow: '<button type="button" class="slick-next"><img src="' + prodPathUrl + '/assets/images/arrow_next.png" alt=""></button>',
 	responsive: [{
 		breakpoint: 992,
 		settings: {
@@ -340,3 +306,36 @@ $('.jsSliderProduct').slick({
 });
 //# sourceMappingURL=script.js.map
 
+jQuery(document).ready(function ($) {
+	dotDot();
+});
+function dotDot() {
+	$(".mainNewsDot").dotdotdot({
+		callback: function callback(isTruncated) {},
+		/* Function invoked after truncating the text.
+		   Inside this function, "this" refers to the wrapper. */
+
+		ellipsis: '\u2026 ',
+		/* The text to add as ellipsis. */
+
+		height: 120,
+		/* The (max-)height for the wrapper:
+		   null: measure the CSS (max-)height ones;
+		   a number: sets a specific height in pixels;
+		   "watch": re-measures the CSS (max-)height in the "watch". */
+
+		keep: null,
+		/* jQuery-selector for elements to keep after the ellipsis. */
+
+		tolerance: 0,
+		/* Deviation for the measured wrapper height. */
+
+		truncate: "word",
+		/* How to truncate the text: By "node", "word" or "letter". */
+
+		watch: "window"
+		/* Whether to update the ellipsis:
+		   true: Monitors the wrapper width and height;
+		   "window": Monitors the window width and height. */
+	});
+}

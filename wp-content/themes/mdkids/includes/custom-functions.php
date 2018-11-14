@@ -5,9 +5,8 @@
  * Date: 02.10.2017
  * Time: 14:22
  */
-
-
 add_action( 'wp_ajax_get_next_page', 'get_next_page' );
+add_action( 'wp_ajax_get_next_product', 'get_next_product' );
 add_action( 'wp_ajax_nopriv_get_next_page', 'get_next_page' );
 add_action( 'wp_ajax_sendForm', 'sendForm' );
 add_action( 'wp_ajax_nopriv_sendForm', 'sendForm' );
@@ -18,8 +17,7 @@ function get_next_page () {
 		'posts_per_page' => 1,
 		'paged'          => $_POST['page'],
 	] );
-	?>
-<?php $z = 0; while ( $blogQuery->have_posts() ) { $z++; $blogQuery->the_post();  ?>
+	 $z = 0; while ( $blogQuery->have_posts() ) { $z++; $blogQuery->the_post(); ?>
 	<div class="main-news-items__item">
 		<div class="main-news-items__item__image">
 			<img src="<?php the_post_thumbnail_url(); ?>" alt="" role="presentation"/>
@@ -40,8 +38,39 @@ function get_next_page () {
 			</a>
 		</div>
 	</div>
-<? }
-}
+<?php }
+}?>
+<?php
+function get_next_product () {
+	$blogQuery = new WP_Query( [
+	'category_name'  => $_POST['cat'],
+	'posts_per_page' => 1,
+	'paged'          => $_POST['page'],
+	] );
+	$z = 0; while ( $blogQuery->have_posts() ) : $z++; $blogQuery->the_post();  ?>
+	<a class="collections-items__item" href="<?php the_permalink(); ?>">
+						<span class="collections-items__item__image">
+							<img src="<?php the_post_thumbnail_url(); ?>" alt="" role="presentation"/>
+						</span>
+		<span class="collections-items__item__text">
+							<h3>
+								<?php the_title(); ?>
+							</h3>
+							<span class="price-block">
+								<span class="old-price">
+									<?php if(fw_get_db_post_option($blogQuery->post->ID, 'price_old')):?>
+										<?=fw_get_db_post_option($blogQuery->post->ID, 'price_old')?>
+									<?endif;?>
+								</span>
+								<span class="real-price">
+								   <?php if(fw_get_db_post_option($blogQuery->post->ID, 'price_new')):?>
+									   <?=fw_get_db_post_option($blogQuery->post->ID, 'price_new')?>
+								   <?endif;?>
+								</span>
+							</span>
+						</span>
+	</a>
+<?php endwhile; };
 function sendForm() {
 	if (isset($_POST )) {
 		// обрабатываем запрос

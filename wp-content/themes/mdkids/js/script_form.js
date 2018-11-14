@@ -59,9 +59,11 @@ $(document).on('click', '#send_form', function (e) {
 		alert('Вы не заполнили все поля!');
 	}
 });
+
 $(document).on('click', '#next', function (e) {
 	e.preventDefault();
 	$('.pagination-active').removeClass( 'pagination-active');
+	var action = $(this).attr('data-action');
 	var left = $('#move_page_left');
 	var right = $('#move_page_right');
 	var all = parseInt(left.attr('data-all'));
@@ -82,7 +84,11 @@ $(document).on('click', '#next', function (e) {
 	}
 	right.attr('data-np', count);
 	left.attr('data-np', count);
-	form_data.append('action', 'get_next_page');
+	if(action) {
+		form_data.append('action', action);
+	} else {
+		form_data.append('action', 'get_next_page');
+	}
 	form_data.append('page', count);
 	form_data.append('cat', cat);
 	$.ajax({
@@ -95,7 +101,11 @@ $(document).on('click', '#next', function (e) {
 			var $response = $(response);
 			// button.addClass("pagination-active");
 			// changeHash(count);
-			$('.m-1').html($response);
+			if(action){
+				$('.similar-items').html($response);
+			} else {
+				$('.m-1').html($response);
+			}
 			dotDot();
 			updateURL(count);
 		}
@@ -134,6 +144,7 @@ function updateURL(page) {
 }
 function getPageByPagination(button, n) {
 	var form_data = new FormData();
+	var action = $('#next').attr('data-action');
 	var cur = parseInt(button.attr('data-np'));
 	var count = parseInt(button.attr('data-np')) + n;
 	var all = parseInt(button.attr('data-all'));
@@ -153,7 +164,11 @@ function getPageByPagination(button, n) {
 	}
 	right.attr('data-np', count);
 	left.attr('data-np', count);
-	form_data.append('action', 'get_next_page');
+	if(action){
+		form_data.append('action', action);
+	} else {
+		form_data.append('action', 'get_next_page');
+	}
 	form_data.append('page', count);
 	form_data.append('cat', cat);
 	$.ajax({
@@ -166,7 +181,11 @@ function getPageByPagination(button, n) {
 			var $response = $(response);
 			// button.addClass("pagination-active");
 			// changeHash(count);
-			$('.m-1').html($response);
+			if(action){
+				$('.similar-items').html($response);
+			} else {
+				$('.m-1').html($response);
+			}
 			dotDot();
 			updateURL(count);
 		}

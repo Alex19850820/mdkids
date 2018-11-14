@@ -19,70 +19,18 @@
 		</div><hr/>
 	</div>
 	<div class="container m-1">
-		<div class="partners-item"><img src="<?php bloginfo('template_url')?>/assets/images/partners_item.png" alt="" role="presentation"/>
-			<div class="partners-item__text">
-				<h3>Airbnb
-				</h3>
-				<p>
-					Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodoconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
-					id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-					laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-					vitae dicta sunt explicabo.
-				</p>
+		<?php foreach ($atts['partners'] as $partner):?>
+			<div class="partners-item">
+				<img src="<?=$partner['img']['url']?>" alt="" role="presentation"/>
+				<div class="partners-item__text">
+					<h3>
+						<?=$partner['h3']?>
+					</h3>
+					<p>
+						<?=$partner['text']?>
+					</p>
+				</div>
 			</div>
-		</div>
-		<div class="partners-item"><img src="<?php bloginfo('template_url')?>/assets/images/partners_item.png" alt="" role="presentation"/>
-			<div class="partners-item__text">
-				<h3>Airbnb
-				</h3>
-				<p>
-					Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodoconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
-					id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-					laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-					vitae dicta sunt explicabo.
-				</p>
-			</div>
-		</div>
-		<div class="partners-item"><img src="<?php bloginfo('template_url')?>/assets/images/partners_item.png" alt="" role="presentation"/>
-			<div class="partners-item__text">
-				<h3>Airbnb
-				</h3>
-				<p>
-					Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodoconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
-					id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-					laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-					vitae dicta sunt explicabo.
-				</p>
-			</div>
-		</div>
-		<div class="partners-item"><img src="<?php bloginfo('template_url')?>/assets/images/partners_item.png" alt="" role="presentation"/>
-			<div class="partners-item__text">
-				<h3>Airbnb
-				</h3>
-				<p>
-					Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodoconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
-					id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-					laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-					vitae dicta sunt explicabo.
-				</p>
-			</div>
-		</div>
-		<div class="partners-item"><img src="<?php bloginfo('template_url')?>/assets/images/partners_item.png" alt="" role="presentation"/>
-			<div class="partners-item__text">
-				<h3>Airbnb
-				</h3>
-				<p>
-					Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodoconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
-					id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-					laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-					vitae dicta sunt explicabo.
-				</p>
-			</div>
-		</div>
+		<?php endforeach;?>
 	</div>
 </section>

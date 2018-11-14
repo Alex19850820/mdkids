@@ -16,25 +16,12 @@ $adrQuery = new WP_Query([
 	'category_name' => $cat_name,
 	'posts_per_page' => 0,]);
 ?>
-<?php //foreach ($adrQuery->posts as $post):?>
-<!--	<input type="hidden" class="address" data-address="--><?//=fw_get_db_post_option($post->ID, 'address')?><!--" data-jk_name="--><?php //the_title();?><!--" data-href="--><?php //the_permalink(); ?><!--">-->
-<?php //endforeach;?>
-
-<!-- start crumbs.html-->
-<!--<section class="crumbs">-->
-<!--	<ul class="crumbs__link">-->
-<!--		--><?php //echo fw_ext_get_breadcrumbs('<i class="fas fa-chevron-right"></i>');?>
-<!--		--><?php //preg_match_all('|<span class="last-item">(.*)</span>|', fw_ext_get_breadcrumbs(), $match);
-//		?>
-<!--	</ul>-->
-<!--</section>-->
-
 	<section class="category-block">
 		<?php
 		
 		$blogQuery = new WP_Query([
 			'category_name' => $cat_name,
-			'posts_per_page' => 6,
+			'posts_per_page' => 1,
 			'paged' => $_GET['page'],
 		]);
 		$contacts = fw_get_db_customizer_option();
@@ -87,7 +74,7 @@ $adrQuery = new WP_Query([
 					</li>
 					<?php for($i=1; $i <= $n; $i++):?>
 						<li class="pagination__ul__li">
-							<a href="#" id="next" data-page="<?=$i?>" data-cat="<?=$cat_name?>">
+							<a href="#" id="next" data-action="get_next_product" data-page="<?=$i?>" data-cat="<?=$cat_name?>">
 								<?=$i?>
 							</a>
 						</li>
