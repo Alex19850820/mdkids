@@ -119,6 +119,7 @@ $breadcrumbs = '<div class="breadcrumbs">
 					'category_name' => $cur_id[0]->slug,
 					'posts_per_page' => 10,
 //					'paged' => $_GET['cur_p'] ?? 1,
+					'post__not_in' => array( $post->ID),
 				]);
 				?>
 				<?php while ( $products->have_posts() ) :  $products->the_post();  ?>

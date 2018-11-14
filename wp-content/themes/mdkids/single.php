@@ -60,10 +60,12 @@ $breadcrumbs = '<div class="breadcrumbs">
 		</div>
 		<div class="container">
 			<div class="main-news-items m-1">
-				<?php $blogQuery = new WP_Query([
+				<?php
+				$blogQuery = new WP_Query([
 					'category_name' => 'news',
 					'posts_per_page' => 3,
-//					'paged' => $_GET['cur_p'] ?? 1,
+//					'paged' => get_query_var( 'paged') ,
+					'post__not_in' => array( $post->ID),
 				]);?>
 				<?php while ( $blogQuery->have_posts() ) :  $blogQuery->the_post();  ?>
 					<div class="main-news-items__item">
