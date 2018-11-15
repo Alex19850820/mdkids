@@ -14,7 +14,7 @@ add_action( 'wp_ajax_nopriv_sendForm', 'sendForm' );
 function get_next_page () {
 	 $blogQuery = new WP_Query( [
 		'category_name'  => $_POST['cat'],
-		'posts_per_page' => 1,
+		'posts_per_page' => $_POST['per_page'],
 		'paged'          => $_POST['page'],
 	] );
 	 $z = 0; while ( $blogQuery->have_posts() ) { $z++; $blogQuery->the_post(); ?>

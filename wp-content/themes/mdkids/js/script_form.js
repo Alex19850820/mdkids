@@ -13,8 +13,6 @@ $(document).on('click', '#send_form', function (e) {
 	var phone = $data.phone;
 	var email = $data.email;
 	var text = $("textarea[name='text']").val();
-
-
 	var form_data = new FormData();
 	if (name ==='') {
 		alert('Введите Ваше имя!');
@@ -64,6 +62,7 @@ $(document).on('click', '#next', function (e) {
 	e.preventDefault();
 	$('.pagination-active').removeClass( 'pagination-active');
 	var action = $(this).attr('data-action');
+	var per_page = $(this).attr('data-per_page');
 	var left = $('#move_page_left');
 	var right = $('#move_page_right');
 	var all = parseInt(left.attr('data-all'));
@@ -91,6 +90,7 @@ $(document).on('click', '#next', function (e) {
 	}
 	form_data.append('page', count);
 	form_data.append('cat', cat);
+	form_data.append('per_page', per_page);
 	$.ajax({
 		url: myajax.url,
 		type: 'post',
@@ -144,8 +144,9 @@ function updateURL(page) {
 }
 function getPageByPagination(button, n) {
 	var form_data = new FormData();
-	var action = $('#next').attr('data-action');
-	var cur = parseInt(button.attr('data-np'));
+	var next = $('#next');
+	var action = next.attr('data-action');
+	var per_page = next.attr('data-per_page');
 	var count = parseInt(button.attr('data-np')) + n;
 	var all = parseInt(button.attr('data-all'));
 	var cat = button.attr('data-cat');
@@ -171,6 +172,7 @@ function getPageByPagination(button, n) {
 	}
 	form_data.append('page', count);
 	form_data.append('cat', cat);
+	form_data.append('per_page', per_page);
 	$.ajax({
 		url: myajax.url,
 		type: 'post',

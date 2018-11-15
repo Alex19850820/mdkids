@@ -14,7 +14,9 @@ $cat_name = get_query_var('name');
 	<div class="head"><hr/>
 		<div class="head__circle">
 		</div>
-		<h2>Новости</h2>
+		<h2>
+			<?=$atts['h2']?>
+		</h2>
 		<div class="head__circle">
 		</div><hr/>
 	</div>
@@ -22,7 +24,7 @@ $cat_name = get_query_var('name');
 		<div class="main-news-items m-1">
 			<?php $blogQuery = new WP_Query([
 				'category_name' => 'news',
-				'posts_per_page' => 1,
+				'posts_per_page' => $atts['count_news'],
 				'paged' => $_GET['cur_p'] ?? 1,
 			]);?>
 			<?php while ( $blogQuery->have_posts() ) :  $blogQuery->the_post();  ?>
@@ -49,14 +51,14 @@ $cat_name = get_query_var('name');
 			<?php endwhile;?>
 		</div>
 		<div class="pagination">
-			<?php $n = getPagination($post, 1); ?>
+			<?php $n = getPagination($post, $atts['count_news']);?>
 			<ul class="pagination__ul">
 				<li class="pagination__ul__prev">
 					<a href="#" id="move_page_left" data-cat="<?=$cat_name?>" data-all="<?=$n?>" data-np="<?=$_GET['cur_p'] ?? 1 ?>">Предыдущая</a>
 				</li>
 				<?php for($i=1; $i <= $n; $i++):?>
 					<li class="pagination__ul__li">
-						<a href="#" id="next" data-page="<?=$i?>" data-cat="<?=$cat_name?>">
+						<a href="#" id="next" data-page="<?=$i?>" data-cat="<?=$cat_name?>" data-per_page="<?=$atts['count_news']?>">
 							<?=$i?>
 						</a>
 					</li>
@@ -68,7 +70,7 @@ $cat_name = get_query_var('name');
 		</div>
 	</div>
 </section>
-<?php function getPagination($post = [], $p) {
+<?php function getPagination($post = [], $p = 1) {
 	$count = '';
 	$arr = get_the_category($post->ID);
 	foreach ($arr as $item) {
@@ -76,10 +78,12 @@ $cat_name = get_query_var('name');
 			$count = $item->category_count;
 		}
 	}
-	if($count) {
-		$n = ceil($count/$p);
-	} else {
-		$n = ceil(get_the_category($post->ID)[0]->category_count/$p);
+	if(is_numeric($p)) {
+		if($count) {
+			return ceil($count/$p);
+		} else {
+			return ceil(get_the_category($post->ID)[0]->category_count/$p);
+		}
 	}
-	return $n;
+	return false;
 }?>
