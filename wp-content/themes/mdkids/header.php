@@ -1,4 +1,5 @@
 <?php
+//var_dump($_SERVER['HTTP_REFERER']);
 /**
  * The header for our theme
  *
@@ -8,12 +9,22 @@
  *
  * @package mdkids
  */
+// получаем объект пользователя с необходимыми данными
+$user_ID = get_current_user_id();
 $contacts = fw_get_db_customizer_option();
 $category = [];
 foreach (get_categories() as $item) {
 	if($item->slug != 'news'&&$item->name != 'Без рубрики' ){
 		$category[$item->slug] = $item->name;
 	}
+}
+if(isset($_GET['login']) && $_GET['login'] == 'failed')
+{
+	?>
+	<div id="login-error" style="background-color: #FFEBE8;border:1px solid #C00;padding:5px;">
+		<p>Ошибка входа: Не верно введен логил или пароль. Попробуйте еще раз.</p>
+	</div>
+	<?php
 }
 ?>
 <!doctype html>
@@ -23,12 +34,12 @@ foreach (get_categories() as $item) {
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title><?php the_title()?></title>
-
 	<?php wp_head(); ?>
 </head>
-
 <body <?php body_class(); ?>>
+<?php //esc_html_e('Plugins', 'mdkids');?>
 <header class="header">
+	<h2>QUICK OVERVIEW</h2>
 	<div class="header-contacts">
 		<div class="header-contacts__left">
 			<a href="tel:<?=preg_replace('![^0-9+]+!', '', $contacts['phone'])?>">
@@ -42,11 +53,21 @@ foreach (get_categories() as $item) {
 				<img src="<?php bloginfo('template_url')?>/assets/images/icons/insta.svg" alt="" role="presentation"/>
 			</a>
 		</div>
-		<div class="header-contacts__right">
-			<a href="#">Вход</a>
-			<hr/>
-			<a href="#">Регистрация</a>
-		</div>
+		<?php if(!$user_ID):?>
+			<div class="header-contacts__right">
+				<a href="#" class="jsLogin">
+					Вход
+				</a>
+				<hr/>
+				<a href="#" class="jsReg">Регистрация</a>
+			</div>
+		<?php endif;?>
+		<?php if($user_ID):?>
+			<a class="login pc-login" href="/cabinet-profile">
+				Мой профиль
+				<img src="assets/images/icons/black-male-user-symbol.svg" alt="" role="presentation"/>
+			</a>
+		<?php endif;?>
 	</div>
 	<hr/>
 	<div class="nav-menu">
@@ -55,10 +76,26 @@ foreach (get_categories() as $item) {
 		<div class="overlay">
 		</div>
 		<ul class="nav-menu__left jsMenu">
-			<li class="mob-login"><a href="#">Вход</a>
-			</li>
-			<li class="mob-login"><a href="#">Регистрация</a>
-			</li>
+			<?php if($user_ID):?>
+				<li class="mob-login">
+					<a class="login" href="/cabinet-profile">
+						Мой профиль
+						<img src="assets/images/icons/black-male-user-symbol.svg" alt="" role="presentation"/>
+					</a>
+				</li>
+			<?php endif;?>
+			<?php if(!$user_ID):?>
+				<li class="mob-login">
+					<a href="#" class="jsLogin">
+						Вход
+					</a>
+				</li>
+				<li class="mob-login">
+					<a href="#" class="jsReg">
+						Регистрация
+					</a>
+				</li>
+			<?php endif;?>
 			<li class="pc-item"><a href="/about-brand">о бренде</a>
 			</li>
 			<li class="mob-item jsParentDropMenu">
@@ -110,8 +147,14 @@ foreach (get_categories() as $item) {
 				</div>
 				<!--+b('img')(src='<?php bloginfo('template_url')?>/assets/images/icons/magnifying-glass.svg' alt='').jsSearch-->
 			</div>
-			<div class="nav-menu__right__basket"><a href="#"><img src="<?php bloginfo('template_url')?>/assets/images/icons/cart.svg" alt=""/><span>(3)</span></a>
-			</div>
+			<?php if($user_ID):?>
+				<div class="nav-menu__right__basket">
+					<a href="/orders">
+						<img src="<?php bloginfo('template_url')?>/assets/images/icons/cart.svg" alt=""/>
+						<span>(3)</span>
+					</a>
+				</div>
+			<?php endif;?>
 		</div>
 	</div>
 </header>

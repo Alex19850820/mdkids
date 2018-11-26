@@ -27,7 +27,7 @@ $(document).on('click', '#send_form', function (e) {
 		return false;
 	}
 	if(text === '') {
-		alert('Введите номер текст сообщения!');
+		alert('Введите текст сообщения!');
 		return false;
 	}
 	if(name !== '') {
@@ -193,6 +193,11 @@ function getPageByPagination(button, n) {
 		}
 	});
 }
+
+$(document).on('click', '.close', function (e) {
+	$('error_reg').hide();
+});
+
 $(document).ready(function(){
 	var left = $('#move_page_left');
 	var right = $('#move_page_right');
@@ -209,5 +214,17 @@ $(document).ready(function(){
 	}
 	if (parseInt(button.attr('data-page')) === last) {
 		right.css({'opacity':'0.5', 'pointer-events':'none'});
+	}
+});
+/*placeholders fot login form*/
+jQuery(document).ready(function(){
+	jQuery('#user_login').attr('placeholder', 'Ваш e-mail');
+	jQuery('#user_pass').attr('placeholder', 'Ваш пароль');
+	jQuery('#loginform').addClass('modal-login');
+	$( "<h2>Авторизация</h2>" ).insertBefore('.login-username');
+	$( '<button type="submit">Войти</button>' ).insertBefore('.login-submit');
+	$( '#wp-submit' ).hide();
+	if($('.error_reg')) {
+		$('.error_reg').insertAfter('#modal').show();
 	}
 });

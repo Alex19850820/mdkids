@@ -134,11 +134,15 @@ function mdkids_scripts() {
 	wp_enqueue_style( 'mdkids-photoswipe-css', 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css', [] );
 	wp_enqueue_style( 'mdkids-photoswipe-default', 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css', [] );
 	
+	wp_enqueue_style( 'mdkids-touch-css', get_template_directory_uri() . '/assets/css/touch-menu-la.css', [] );
+	
 	wp_enqueue_style( 'mdkids-slick-css', get_template_directory_uri() . '/assets/css/slick.css', [] );
 	
 	wp_enqueue_style( 'mdkids-fonts', get_template_directory_uri() . '/assets/fonts/fonts.css', [] );
 	
 	wp_enqueue_style( 'mdkids-styles', get_template_directory_uri() . '/assets/css/style.css', [] );
+	
+	wp_enqueue_style( 'mdkids-mystyles', get_template_directory_uri() . '/assets/css/mystyles.css', [] );
 	
 	/*
 	 * Подключаем скрипты:
@@ -162,6 +166,12 @@ function mdkids_scripts() {
 	wp_enqueue_script( 'mdkids-js-photoswipe-default-ui', 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js', [], '', true );
 	
 	wp_enqueue_script( 'mdkids-js-slick', get_template_directory_uri() . '/assets/js/slick.min.js', [], '', true );
+	wp_enqueue_script( 'mdkids-js-hammer', get_template_directory_uri() . '/assets/js/hammer.js', [], '', true );
+	wp_enqueue_script( 'mdkids-js-touch', get_template_directory_uri() . '/assets/js/touch-menu-la.js', [], '', true );
+	wp_enqueue_script( 'mdkids-js-inputmask', get_template_directory_uri() . '/assets/js/jquery.inputmask.bundle.js', [], '', true );
+	wp_enqueue_script( 'mdkids-js-phone', get_template_directory_uri() . '/assets/js/phone.js', [], '', true );
+	wp_enqueue_script( 'mdkids-js-select2', get_template_directory_uri() . '/assets/js/select2.min.js', [], '', true );
+	wp_enqueue_script( 'mdkids-js-phone-ru', get_template_directory_uri() . '/assets/js/phone-ru.js', [], '', true );
 	wp_enqueue_script( 'mdkids-js-jq_dot', get_template_directory_uri() . '/assets/js/jquery.dotdotdot.js', [], '', true );
 	wp_enqueue_script( 'mdkids-js-script', get_template_directory_uri() . '/assets/js/script.js', [], '', true );
 	wp_enqueue_script( 'mdkids-js-myscript', get_template_directory_uri() . '/js/script_form.js', [], '', true );
@@ -218,3 +228,55 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+add_filter('user_contactmethods', 'my_user_contactmethods');
+
+function my_user_contactmethods($user_contactmethods){
+	
+	$user_contactmethods['patronymic'] = 'Отчество';
+	$user_contactmethods['phone'] = 'Телефон';
+	$user_contactmethods['birthday'] = 'День рождения';
+	$user_contactmethods['sex'] = 'Пол';
+	
+	return $user_contactmethods;
+}
+
+/**login auth*/
+add_action( 'wp_login_failed', 'pu_login_failed' ); // hook failed login
+	function pu_login_failed( $user ) {
+	     // check what page the login attempt is coming from
+	     $referrer = $_SERVER['HTTP_REFERER'];
+	     // check that were not on the default login page
+	     if ( !empty($referrer) && !strstr($referrer,'wp-login') && !strstr($referrer,'wp-admin') && $user!=null ) {
+	          // make sure we don't already have a failed login attempt
+	          if ( !strstr($referrer, '?login=failed' )) {
+	               // Redirect to the login page and append a querystring of login failed
+	          wp_redirect( $referrer . '?login=failed');
+	         } else {
+	               wp_redirect( $referrer );
+	         }
+	         exit;
+	     }
+	}
+/**empty login and pass*/
+add_action( 'authenticate', 'pu_blank_login');
+	function pu_blank_login( $user ){
+	     // check what page the login attempt is coming from
+	     $referrer = $_SERVER['HTTP_REFERER'];
+	     $error = false;
+	     if($_POST['log'] == '' || $_POST['pwd'] == '')
+	     {
+	          $error = true;
+	     }
+	     // check that were not on the default login page
+	     if ( !empty($referrer) && !strstr($referrer,'wp-login') && !strstr($referrer,'wp-admin') && $error ) {
+	
+	          // make sure we don't already have a failed login attempt
+	     if ( !strstr($referrer, '?login=failed') ) {
+	          // Redirect to the login page and append a querystring of login failed
+	          wp_redirect( $referrer . '?login=failed' );
+	          } else {
+	          wp_redirect( $referrer );
+	          }
+	    exit;
+	     }
+	}

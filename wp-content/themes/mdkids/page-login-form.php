@@ -19,17 +19,16 @@ if($current_user->ID) {
 		wp_safe_redirect( '/cabinet' );
 	}
 }
-get_ajax_login();
 get_header();
 	$args = [
 		'echo'           => true,
 		'redirect'       => site_url( $_SERVER['REQUEST_URI'] )."/cabinet",
 		'form_id'        => 'loginform',
-		'label_username' => __( 'Username' ),
+		'label_email' => __( 'Email' ),
 		'label_password' => __( 'Password' ),
 		'label_remember' => __( 'Remember Me' ),
 		'label_log_in'   => __( 'Log In' ),
-		'id_username'    => 'user_login',
+		'id_email'    => 'user_email',
 		'id_password'    => 'user_pass',
 		'id_remember'    => 'rememberme',
 		'id_submit'      => 'wp-submit',
@@ -39,4 +38,3 @@ get_header();
 	];
 	wp_login_form( $args );
 	get_footer();
-

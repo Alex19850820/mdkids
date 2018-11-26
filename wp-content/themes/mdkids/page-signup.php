@@ -43,5 +43,6 @@ get_header();
 		
 		<p class="submit"><input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="Регистрация"></p>
 	</form>
+<?php custom_registration_function(); ?>
 <?php	get_footer();
 

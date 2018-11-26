@@ -37,6 +37,48 @@ $arg = [
 	</a>
 	<span>Copyright © 2018 MDkidsjewellery</span>
 </div>
+<div class="modal" id="modal">
+	<div class="overlay-modal">
+	</div>
+	<div class="modal-block">
+		<div class="modal-close">
+			<span></span>
+			<span></span>
+		</div>
+<!--		<form class="modal-login">-->
+<!--			<h2>-->
+<!--				Авторизация-->
+<!--			</h2>-->
+<!--			<input type="text" name="email" placeholder="Ваш e-mail"/>-->
+<!--			<input type="password" name="pass" placeholder="Ваш пароль"/>-->
+<!--			<button type="submit">-->
+<!--				Войти-->
+<!--			</button>-->
+<!--		</form>-->
+	<?php
+		$args = [
+		'echo'           => true,
+		'redirect'       => site_url()."/cabinet",
+//		'redirect'       => site_url( $_SERVER['REQUEST_URI'] )."/cabinet",
+		'form_id'        => 'loginform',
+		'label_email' => __( 'Email' ),
+		'label_password' => __( 'Password' ),
+		'label_remember' => __( 'Remember Me' ),
+		'label_log_in'   => __( 'Log In' ),
+		'id_email'    => 'user_email',
+		'id_password'    => 'user_pass',
+		'id_remember'    => 'rememberme',
+		'id_submit'      => 'wp-submit',
+		'remember'       => true,
+		'value_username' => NULL,
+		'value_remember' => false
+	];
+	wp_login_form( $args );?>
+		<?php
+		echo do_shortcode('[cr_custom_registration]');
+		?>
+	</div>
+</div>
 
 <?php wp_footer(); ?>
 	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
