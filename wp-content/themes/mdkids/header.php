@@ -39,7 +39,6 @@ if(isset($_GET['login']) && $_GET['login'] == 'failed')
 <body <?php body_class(); ?>>
 <?php //esc_html_e('Plugins', 'mdkids');?>
 <header class="header">
-	<h2>QUICK OVERVIEW</h2>
 	<div class="header-contacts">
 		<div class="header-contacts__left">
 			<a href="tel:<?=preg_replace('![^0-9+]+!', '', $contacts['phone'])?>">
