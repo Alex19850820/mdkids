@@ -58,7 +58,7 @@ $arg = [
 	<?php
 		$args = [
 		'echo'           => true,
-		'redirect'       => site_url()."/cabinet",
+		'redirect'       => site_url()."/cabinet-profile",
 //		'redirect'       => site_url( $_SERVER['REQUEST_URI'] )."/cabinet",
 		'form_id'        => 'loginform',
 		'label_email' => __( 'Email' ),
