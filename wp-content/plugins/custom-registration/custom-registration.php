@@ -181,7 +181,7 @@ function registration_validation( $username, $password, $email)  {
     if ( is_wp_error( $reg_errors ) ) {
     	if(count($reg_errors->get_error_messages())) {
 		    echo '
-				    <div class="modal-error js-modalError" style="display: block">
+				    <div class="modal-error modal-active js-modalError" style="display: block">
 						<div class="modal-error__backdrop js-modalErrorClose">
 						</div>
 						<div class="modal-block">
