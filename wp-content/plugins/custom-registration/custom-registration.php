@@ -180,14 +180,21 @@ function registration_validation( $username, $password, $email)  {
 
     if ( is_wp_error( $reg_errors ) ) {
     	if(count($reg_errors->get_error_messages())) {
-		    echo '<div class="error_reg">
-				<div>
-				<a href="#close" title="Закрыть" class="close_error">X</a>
-				<h2>Ошибка</h2>';
-		    foreach ( $reg_errors->get_error_messages() as $error ) {
-			    echo $error . '<br/>';
-		    }
-		    echo '</div></div>';
+		    echo '
+				    <div class="modal-error js-modalError">
+						<div class="modal-error__backdrop js-modalErrorClose">
+						</div>
+						<div class="modal-block">
+							<div class="modal-error__close js-modalErrorClose"><span></span><span></span>
+							</div>
+							<p>
+							';
+						    foreach ( $reg_errors->get_error_messages() as $error ) {
+							    echo $error . '<br/>';
+						    }
+						echo '</p>
+						</div>
+					</div>';
 	    }
     }
 }

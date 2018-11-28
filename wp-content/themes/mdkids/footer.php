@@ -79,7 +79,16 @@ $arg = [
 		?>
 	</div>
 </div>
-
+<div class="modal-error js-modalError">
+	<div class="modal-error__backdrop js-modalErrorClose">
+	</div>
+	<div class="modal-block">
+		<div class="modal-error__close js-modalErrorClose"><span></span><span></span>
+		</div>
+		<p>Введите корретные данные.
+		</p>
+	</div>
+</div>
 <?php wp_footer(); ?>
 	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 		<!-- Background of PhotoSwipe. It's a separate element, as animating opacity is faster than rgba(). -->
