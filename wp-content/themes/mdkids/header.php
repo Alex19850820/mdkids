@@ -55,7 +55,7 @@ if(isset($_GET['login']) && $_GET['login'] == 'failed')
 		<?php if(!$user_ID):?>
 			<div class="header-contacts__right">
 				<a href="#" class="jsLogin">
-					Вход
+					<?php esc_html_e('Enter', 'mdkids')?>
 				</a>
 				<hr/>
 				<a href="#" class="jsReg">Регистрация</a>

@@ -179,14 +179,16 @@ function registration_validation( $username, $password, $email)  {
 //    }
 
     if ( is_wp_error( $reg_errors ) ) {
-		echo '<div class="error_reg">
+    	if(count($reg_errors->get_error_messages())) {
+		    echo '<div class="error_reg">
 				<div>
 				<a href="#close" title="Закрыть" class="close_error">X</a>
 				<h2>Ошибка</h2>';
-	        foreach ( $reg_errors->get_error_messages() as $error ) {
-	            echo $error . '<br/>';
-	        }
-	    echo '</div></div>';
+		    foreach ( $reg_errors->get_error_messages() as $error ) {
+			    echo $error . '<br/>';
+		    }
+		    echo '</div></div>';
+	    }
     }
 }
 

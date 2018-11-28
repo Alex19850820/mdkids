@@ -280,3 +280,11 @@ add_action( 'authenticate', 'pu_blank_login');
 	    exit;
 	     }
 	}
+	/**Locale*/
+add_filter( 'locale', 'set_my_locale' );
+function set_my_locale( $lang ) {
+	if ( 'ru' == $_GET['language'] )
+		return 'ru_RU';
+	else
+		return $lang;
+}
