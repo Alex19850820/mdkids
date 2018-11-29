@@ -240,3 +240,7 @@ $(document).on('click', '.modal-error__close', function (e) {
 	$('#modal').removeClass('modal-active');
 
 });
+$(document).on('click', '.jsLogin', function (e) {
+	e.preventDefault();
+	$('#loginform').show();
+});

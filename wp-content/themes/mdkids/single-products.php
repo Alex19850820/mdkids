@@ -12,7 +12,6 @@
  *
  * @package globus-landing-master
  */
-
 get_header();
 $breadcrumbs = fw_ext_get_breadcrumbs('<i class="fas fa-chevron-right"></i>');
 $breadcrumbs = preg_match_all('|<span class="last-item">(.*)|', $breadcrumbs, $match);
@@ -90,7 +89,7 @@ $breadcrumbs = '<div class="breadcrumbs">
 						<?=fw_get_db_post_option($post->ID, 'price_new')?>
 					</span>
 				</div>
-				<button class="product-info__btn">
+				<button class="product-info__btn <?=(!$current_user->ID) ? 'jsLogin' : 'add_product'?>">
 					Добавить в корзину
 				</button>
 			</div>
