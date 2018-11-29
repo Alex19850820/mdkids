@@ -215,9 +215,14 @@ $(document).ready(function(){
 	if (parseInt(button.attr('data-page')) === last) {
 		right.css({'opacity':'0.5', 'pointer-events':'none'});
 	}
+
 });
 /*placeholders fot login form*/
 jQuery(document).ready(function(){
+	var error = $('#form_error').attr('data-error');
+	if(error) {
+		$('#modal').addClass('modal-active');
+	}
 	jQuery('#user_login').attr('placeholder', 'Ваш e-mail');
 	jQuery('#user_pass').attr('placeholder', 'Ваш пароль');
 	jQuery('#loginform').addClass('modal-login');
@@ -227,4 +232,11 @@ jQuery(document).ready(function(){
 	if($('.error_reg')) {
 		$('.error_reg').insertAfter('#modal').show();
 	}
+	$('#loginform').hide();
+});
+$(document).on('click', '.modal-error__close', function (e) {
+	e.preventDefault();
+	$('#form_error').remove();
+	$('#modal').removeClass('modal-active');
+
 });

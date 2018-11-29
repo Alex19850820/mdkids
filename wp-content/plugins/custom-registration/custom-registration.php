@@ -85,7 +85,7 @@ function registration_form( $username, $password, $email ) {
 			<input type="text" name="username" placeholder="Ваше Имя" value="' . (isset($_POST['username']) ? $username : null) . '" required/ >
 			<input type="text" name="email" value="' . (isset($_POST['email']) ? $email : null) . '" placeholder="Ваш e-mail" required/>
 			<input type="password" name="password" value="' . (isset($_POST['password']) ? $password : null) . '"placeholder="Ваш пароль" required/>
-			<button type="submit" name="submit">
+			<button id="signup_form" type="submit" name="submit">
 				Зарегистрироваться
 			</button>
 		</form>
@@ -181,7 +181,7 @@ function registration_validation( $username, $password, $email)  {
     if ( is_wp_error( $reg_errors ) ) {
     	if(count($reg_errors->get_error_messages())) {
 		    echo '
-				    <div class="modal-error modal-active js-modalError">
+				    <div id="form_error" data-error="1" class="modal-error modal-active js-modalError">
 						<div class="modal-error__backdrop js-modalErrorClose">
 						</div>
 						<div class="modal-block">
@@ -193,6 +193,19 @@ function registration_validation( $username, $password, $email)  {
 							    echo $error . '<br/>';
 						    }
 						echo '</p>
+						</div>
+					</div>';
+	    } else {
+		    echo '
+				    <div id="form_error" data-error="1" class="modal-error modal-active js-modalError">
+						<div class="modal-error__backdrop js-modalErrorClose">
+						</div>
+						<div class="modal-block">
+							<div class="modal-error__close js-modalErrorClose"><span></span><span></span>
+							</div>
+							<p>
+								На ваш почтовый ящик '.$email.' отправлено письмо для подтверждения регистрации!
+		                    </p>
 						</div>
 					</div>';
 	    }
@@ -213,8 +226,11 @@ function complete_registration($username, $password, $email) {
 //        'nickname' 		=> 	$nickname,
 //        'description' 	=> 	$bio,
 		);
-        $user = wp_insert_user( $userdata );
-        echo 'Registration complete. Goto <a href="' . get_site_url() . '/wp-login.php">login page</a>.';   
+	    $user = wp_insert_user( $userdata );
+//	    $user_id = get_user_by('email', $email)->ID;
+	    
+	    echo 'Registration complete. Goto <a href="' . get_site_url() . '/wp-login.php">login page</a>.';
+	    wp_new_user_notification( $user, $password);
 	}
 }
 
