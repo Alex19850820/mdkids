@@ -89,7 +89,7 @@ $breadcrumbs = '<div class="breadcrumbs">
 						<?=fw_get_db_post_option($post->ID, 'price_new')?>
 					</span>
 				</div>
-				<button class="product-info__btn <?=(!$current_user->ID) ? 'jsLogin' : 'add_product'?>">
+				<button class="product-info__btn <?=(!$current_user->ID) ? 'jsReg' : 'add_product'?>">
 					Добавить в корзину
 				</button>
 			</div>
