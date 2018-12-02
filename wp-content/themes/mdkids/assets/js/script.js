@@ -150,51 +150,6 @@ $(function () {
 });
 
 $(document).ready(function () {
-  function totalPrice() {
-    var total = document.querySelector('.jsTotal');
-    var sumPrice = document.querySelectorAll('.jsSummOrders');
-    var allPriceSumm = 0;
-    for (var i = 0; i < sumPrice.length; i++) {
-      var sumPriceHTML = Number(sumPrice[i].innerHTML);
-      allPriceSumm += sumPriceHTML;
-    }
-    total.innerHTML = allPriceSumm;
-  }
-  if ($('.jsTotal').length > 0) {
-    totalPrice();
-  }
-
-  $('.minus').click(function () {
-    var $input = $(this).parent().find('input');
-    if ($input.val() > 1) {
-      $input[0].setAttribute('value', Number($input[0].value) - 1);
-      var parent = this.closest('.orders-item');
-      var priceOneProdust = parent.querySelector('.jsPriceOrders');
-      var priceOneProdustHTML = Number(priceOneProdust.innerHTML);
-      var sumPrice = parent.querySelector('.jsSummOrders');
-      var sumPriceHTML = Number(sumPrice.innerHTML);
-      sumPriceHTML -= priceOneProdustHTML;
-      sumPrice.innerHTML = sumPriceHTML;
-    }
-    $input.change;
-    totalPrice();
-    return false;
-  });
-  $('.plus').click(function () {
-    var $input = $(this).parent().find('input');
-    // $input.val(parseInt($input.val()) + 1);
-    $input[0].setAttribute('value', Number($input[0].value) + 1);
-    $input.change;
-    var parent = this.closest('.orders-item');
-    var priceOneProdust = parent.querySelector('.jsPriceOrders');
-    var priceOneProdustHTML = Number(priceOneProdust.innerHTML);
-    var sumPrice = parent.querySelector('.jsSummOrders');
-    var sumPriceHTML = Number(sumPrice.innerHTML);
-    sumPriceHTML += priceOneProdustHTML;
-    sumPrice.innerHTML = sumPriceHTML;
-    totalPrice();
-    return false;
-  });
 
   $('.jsDeleteOrder').click(function () {
     var orderBlock = this.closest('.orders-item');
@@ -202,7 +157,6 @@ $(document).ready(function () {
     totalPrice();
   });
 });
-
 jQuery(document).ready(function ($) {
   jQuery(document).ready(function ($) {
     dotDot();

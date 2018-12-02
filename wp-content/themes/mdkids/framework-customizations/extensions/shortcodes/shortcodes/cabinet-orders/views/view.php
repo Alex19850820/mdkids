@@ -8,6 +8,9 @@
  *
  **/
 $curr_user = wp_get_current_user();
+global $wpdb;
+$table_name = $wpdb->prefix . 'orders';
+$basket = $wpdb->get_results( "SELECT * FROM $table_name WHERE `user_id` = ".$curr_user->ID." AND `status` = 0" );
 ?>
 <div class="cabinet-info mb-cabinet">
 	<div class="cabinet-head">
@@ -41,106 +44,58 @@ $curr_user = wp_get_current_user();
 				</a>
 			</li>
 		</ul>
-		<div class="orders">
+		<?php if($basket):?>
+			<div class="orders">
 			<div class="orders__head"><span>Товар</span><span>Цена</span><span>Кол-во</span><span>Итого</span>
 			</div>
-			<div class="orders-item">
-				<div class="orders-item__image"><img src="assets/images/orders_image.png" alt="" role="presentation"/>
+			<?php foreach ($basket as $item):?>
+				<div class="orders-item">
+				<div class="orders-item__image">
+					<?=get_the_post_thumbnail($item->product_id, '', ['class'=>''])?>
 				</div>
 				<div class="orders-item__price">
 					<div class="orders-item__price__info">
-						<p>Подвеска “Конёк”
-						</p><span class="orders-item__price__info__color">цвет<span class="orders-item__price__info__color__circle" style="background-color: #dbdad8;"></span></span>
+						<p>
+							<?=get_the_category( $item->product_id)[0]->name?> "<?= get_the_title( $item->product_id )?>"
+						</p>
+						<span class="orders-item__price__info__color">цвет<span class="orders-item__price__info__color__circle" style="background-color: #dbdad8;"></span></span>
 					</div>
 					<div class="orders-item__price__price-summ">
-						<p class="jsPriceOrders">3500
+						<p class="jsPriceOrders"><?=preg_replace('/.00/','', $item->price)?>
 						</p><span>руб.</span>
 					</div>
-					<div class="orders-item__price__number"><span class="minus">-</span><input class="num" type="text" value="1" disabled="disabled"/><span class="plus">+</span>
+					<div class="orders-item__price__number">
+						<span id="remove" data-id="<?=$item->id?>" data-user="<?=$item->user_id?>"class="minus">-</span>
+						<input class="num" type="text" value="<?=$item->count_p?>" disabled="disabled"/>
+						<span id="add" data-id="<?=$item->id?>" data-user="<?=$item->user_id?>" class="plus">+</span>
 					</div>
 					<div class="orders-item__price__allsumm">
-						<p class="jsSummOrders">3500
+						<p class="jsSummOrders"><?=$item->count_p * preg_replace('/.00/','', $item->price)?>
 						</p><span>руб.</span>
 					</div>
 				</div>
-				<button class="jsDeleteOrder"><img src="<?php bloginfo('template_url')?>/assets/images/icons/cancel.svg" alt="" role="presentation"/>
+				<button id="del" data-id="<?=$item->id?>" data-user="<?=$item->user_id?>" class="jsDeleteOrder">
+					<img src="<?php bloginfo('template_url')?>/assets/images/icons/cancel.svg" alt="" role="presentation"/>
 				</button>
 			</div>
-			<div class="orders-item">
-				<div class="orders-item__image"><img src="<?php bloginfo('template_url')?>/assets/images/orders_image.png" alt="" role="presentation"/>
-				</div>
-				<div class="orders-item__price">
-					<div class="orders-item__price__info">
-						<p>Подвеска “Конёк”
-						</p><span class="orders-item__price__info__color">цвет<span class="orders-item__price__info__color__circle" style="background-color: #dbdad8;"></span></span>
-					</div>
-					<div class="orders-item__price__price-summ">
-						<p class="jsPriceOrders">3500
-						</p><span>руб.</span>
-					</div>
-					<div class="orders-item__price__number"><span class="minus">-</span><input class="num" type="text" value="1" disabled="disabled"/><span class="plus">+</span>
-					</div>
-					<div class="orders-item__price__allsumm">
-						<p class="jsSummOrders">3500
-						</p><span>руб.</span>
-					</div>
-				</div>
-				<button class="jsDeleteOrder"><img src="<?php bloginfo('template_url')?>/assets/images/icons/cancel.svg" alt="" role="presentation"/>
-				</button>
-			</div>
-			<div class="orders-item">
-				<div class="orders-item__image"><img src="<?php bloginfo('template_url')?>/assets/images/orders_image.png" alt="" role="presentation"/>
-				</div>
-				<div class="orders-item__price">
-					<div class="orders-item__price__info">
-						<p>Подвеска “Конёк”
-						</p><span class="orders-item__price__info__color">цвет<span class="orders-item__price__info__color__circle" style="background-color: #dbdad8;"></span></span>
-					</div>
-					<div class="orders-item__price__price-summ">
-						<p class="jsPriceOrders">3500
-						</p><span>руб.</span>
-					</div>
-					<div class="orders-item__price__number"><span class="minus">-</span><input class="num" type="text" value="1" disabled="disabled"/><span class="plus">+</span>
-					</div>
-					<div class="orders-item__price__allsumm">
-						<p class="jsSummOrders">3500
-						</p><span>руб.</span>
-					</div>
-				</div>
-				<button class="jsDeleteOrder"><img src="<?php bloginfo('template_url')?>/assets/images/icons/cancel.svg" alt="" role="presentation"/>
-				</button>
-			</div>
-			<div class="orders-item">
-				<div class="orders-item__image"><img src="<?php bloginfo('template_url')?>/assets/images/orders_image.png" alt="" role="presentation"/>
-				</div>
-				<div class="orders-item__price">
-					<div class="orders-item__price__info">
-						<p>Подвеска “Конёк”
-						</p><span class="orders-item__price__info__color">цвет<span class="orders-item__price__info__color__circle" style="background-color: #dbdad8;"></span></span>
-					</div>
-					<div class="orders-item__price__price-summ">
-						<p class="jsPriceOrders">3500
-						</p><span>руб.</span>
-					</div>
-					<div class="orders-item__price__number"><span class="minus">-</span><input class="num" type="text" value="1" disabled="disabled"/><span class="plus">+</span>
-					</div>
-					<div class="orders-item__price__allsumm">
-						<p class="jsSummOrders">3500
-						</p><span>руб.</span>
-					</div>
-				</div>
-				<button class="jsDeleteOrder"><img src="<?php bloginfo('template_url')?>/assets/images/icons/cancel.svg" alt="" role="presentation"/>
-				</button>
-			</div>
+			<?php endforeach;?>
 			<div class="orders__total">
 				<div class="orders__total__block">
 					<p class="jsTotal">
 					</p><span>руб.</span>
 				</div>
-				<button>
+				<button id="send_order" data-user="<?=$curr_user->ID?>">
 					Заказать
 				</button>
 			</div>
+		</div>
+		<?php else:?>
+			<div style="text-align: center;">
+				<h2>У Вас нет пока заказов в корзине!</h2>
+			</div>
+		<?php endif;?>
+		<div class="basket_empty" style="display: none; text-align: center;">
+			<h2>Ваша корзина пуста!</h2>
 		</div>
 	</div>
 </div>

@@ -244,3 +244,173 @@ $(document).on('click', '.jsLogin', function (e) {
 	e.preventDefault();
 	$('#loginform').show();
 });
+$(document).on('click', '#remove, #add, #del', function (e) {
+	e.preventDefault();
+	var user_id = $(this).attr('data-user');
+	var product_id = $(this).attr('data-id');
+	var button = $(this);
+	if(button.attr('id') === 'remove') {
+		var $input = $(this).parent().find('input');
+		if ($input.val() > 1) {
+			$input[0].setAttribute('value', Number($input[0].value) - 1);
+			var parent = this.closest('.orders-item');
+			var priceOneProdust = parent.querySelector('.jsPriceOrders');
+			var priceOneProdustHTML = Number(priceOneProdust.innerHTML);
+			var sumPrice = parent.querySelector('.jsSummOrders');
+			var sumPriceHTML = Number(sumPrice.innerHTML);
+			sumPriceHTML -= priceOneProdustHTML;
+			sumPrice.innerHTML = sumPriceHTML;
+		}
+		$input.change;
+		totalPrice();
+		basket_action(user_id, product_id, 'removeBasket');
+		return false;
+	}
+	if(button.attr('id') === 'add') {
+		var $input = $(this).parent().find('input');
+		// $input.val(parseInt($input.val()) + 1);
+		$input[0].setAttribute('value', Number($input[0].value) + 1);
+		// var neval = parseInt($(this).prev().attr('value')) + 1;
+		// $(this).prev().attr('value', neval);
+		console.log();
+		$input.change;
+		var parent = this.closest('.orders-item');
+		var priceOneProdust = parent.querySelector('.jsPriceOrders');
+		var priceOneProdustHTML = Number(priceOneProdust.innerHTML);
+		var sumPrice = parent.querySelector('.jsSummOrders');
+		var sumPriceHTML = Number(sumPrice.innerHTML);
+		sumPriceHTML += priceOneProdustHTML;
+		sumPrice.innerHTML = sumPriceHTML;
+		totalPrice();
+		basket_action(user_id, product_id, 'addCurBasket');
+		return false;
+	}
+	if(button.attr('id') === 'del') {
+		basket_action(user_id, product_id, 'delBasket')
+	}
+});
+$(document).on('click', '#send_order', function (e) {
+	e.preventDefault();
+	var user_id = $(this).attr('data-user');
+	var form_data = new FormData();
+	form_data.append('user_id', user_id);
+	form_data.append('action', 'sendOrder');
+	$.ajax({
+		url: myajax.url,
+		type: 'post',
+		data: form_data,
+		contentType: false,
+		processData: false,
+		success: function (response) {
+			if (response.result === 'success') {
+				/*form.reset();*/
+				alert(response.message);
+				$('#basket_count').html('('+response.count+')');
+				$('.orders').remove();
+				$('.basket_empty').show();
+			} else {
+				alert(response.message);
+			}
+		}
+	});
+});
+
+
+$(document).on('click', '.add_product', function (e) {
+	e.preventDefault();
+	var user_id = $(this).attr('data-user');
+	var product_id = $(this).attr('data-id');
+	var price = $(this).attr('data-price');
+	var form_data = new FormData();
+	form_data.append('user_id', user_id);
+	form_data.append('product_id', product_id);
+	form_data.append('price', price);
+	form_data.append('action', 'addBasket');
+	$.ajax({
+		url: myajax.url,
+		type: 'post',
+		data: form_data,
+		contentType: false,
+		processData: false,
+		success: function (response) {
+			if (response.result === 'success') {
+				/*form.reset();*/
+				alert(response.message);
+				$('#basket_count').html('('+response.count+')');
+			} else {
+				alert(response.message);
+			}
+		}
+	});
+});
+function basket_action(user_id, product_id, action) {
+	var form_data = new FormData();
+	form_data.append('user_id', user_id);
+	form_data.append('id', product_id);
+	form_data.append('action', action);
+	$.ajax({
+		url: myajax.url,
+		type: 'post',
+		data: form_data,
+		contentType: false,
+		processData: false,
+		success: function (response) {
+			if (response.result === 'success') {
+				/*form.reset();*/
+				alert(response.message);
+				$('#basket_count').html('('+response.count+')');
+			} else {
+				alert(response.message);
+			}
+		}
+	});
+}
+function totalPrice() {
+	var total = document.querySelector('.jsTotal');
+	var sumPrice = document.querySelectorAll('.jsSummOrders');
+	var allPriceSumm = 0;
+	for (var i = 0; i < sumPrice.length; i++) {
+		var sumPriceHTML = Number(sumPrice[i].innerHTML);
+		allPriceSumm += sumPriceHTML;
+	}
+	total.innerHTML = allPriceSumm;
+}
+if ($('.jsTotal').length > 0) {
+	totalPrice();
+}
+
+// $('.minus').click(function () {
+// 	var $input = $(this).parent().find('input');
+// 	if ($input.val() > 1) {
+// 		$input[0].setAttribute('value', Number($input[0].value) - 1);
+// 		var parent = this.closest('.orders-item');
+// 		var priceOneProdust = parent.querySelector('.jsPriceOrders');
+// 		var priceOneProdustHTML = Number(priceOneProdust.innerHTML);
+// 		var sumPrice = parent.querySelector('.jsSummOrders');
+// 		var sumPriceHTML = Number(sumPrice.innerHTML);
+// 		sumPriceHTML -= priceOneProdustHTML;
+// 		sumPrice.innerHTML = sumPriceHTML;
+// 	}
+// 	$input.change;
+// 	totalPrice();
+// 	$('#remove').click();
+// 	return false;
+// });
+// $('.plus').click(function () {
+	// var $input = $(this).parent().find('input');
+	// // $input.val(parseInt($input.val()) + 1);
+	// $input[0].setAttribute('value', Number($input[0].value) + 1);
+	// // var neval = parseInt($(this).prev().attr('value')) + 1;
+	// // $(this).prev().attr('value', neval);
+	// console.log();
+	// $input.change;
+	// var parent = this.closest('.orders-item');
+	// var priceOneProdust = parent.querySelector('.jsPriceOrders');
+	// var priceOneProdustHTML = Number(priceOneProdust.innerHTML);
+	// var sumPrice = parent.querySelector('.jsSummOrders');
+	// var sumPriceHTML = Number(sumPrice.innerHTML);
+	// sumPriceHTML += priceOneProdustHTML;
+	// sumPrice.innerHTML = sumPriceHTML;
+	// totalPrice();
+	// return false;
+// });

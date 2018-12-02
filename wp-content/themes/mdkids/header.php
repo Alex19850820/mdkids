@@ -18,6 +18,9 @@ foreach (get_categories() as $item) {
 		$category[$item->slug] = $item->name;
 	}
 }
+$table_name = $wpdb->prefix . 'orders';
+global $wpdb;
+$basket = $wpdb->get_results("SELECT SUM(`count_p`) as count FROM $table_name WHERE `user_id` =".$user_ID." AND `status` = 0 ");
 if(isset($_GET['login']) && $_GET['login'] == 'failed')
 {
 	?>
@@ -148,9 +151,9 @@ if(isset($_GET['login']) && $_GET['login'] == 'failed')
 			</div>
 			<?php if($user_ID):?>
 				<div class="nav-menu__right__basket">
-					<a href="/orders">
+					<a href="/cabinet-orders">
 						<img src="<?php bloginfo('template_url')?>/assets/images/icons/cart.svg" alt=""/>
-						<span>(3)</span>
+						<span id="basket_count">(<?=$basket[0]->count ?? 0?>)</span>
 					</a>
 				</div>
 			<?php endif;?>
