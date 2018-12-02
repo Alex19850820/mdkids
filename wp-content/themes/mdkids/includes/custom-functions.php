@@ -281,7 +281,7 @@ function sendOrder() {
 		if (wp_mail($adminEmail,'Заявка на заказ товара '.get_bloginfo('description').' '.get_bloginfo('url'), $message, 'content-type: text/html')) {
 			$result = [
 				'result' => 'success',
-				'message' => 'Ваш заказ отправлен!<br>Ожидайте с Вами скоро свяжутся!',
+				'message' => 'Ваш заказ отправлен!Ожидайте с Вами скоро свяжутся!',
 				'count' => $count[0]->count,
 			];
 		} else {
