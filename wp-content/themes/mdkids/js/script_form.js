@@ -378,7 +378,29 @@ function totalPrice() {
 if ($('.jsTotal').length > 0) {
 	totalPrice();
 }
-
+$('.select-opt').click( function (e) {
+	e.preventDefault();
+	var user_id = $('#curLang').attr('data-user');
+	var form_data = new FormData();
+	form_data.append('user_id', user_id);
+	form_data.append('value', $(this).val());
+	form_data.append('key', 'lang');
+	form_data.append('action', 'settingsUser');
+	if(parseInt(user_id) !== 0) {
+		$.ajax({
+			url: myajax.url,
+			type: 'post',
+			data: form_data,
+			contentType: false,
+			processData: false,
+			success: function (response) {
+				$(location).attr('href', '/');
+			}
+		})
+	} else {
+		$(location).attr('href', '/?language='+ $(this).val());
+	}
+});
 // $('.minus').click(function () {
 // 	var $input = $(this).parent().find('input');
 // 	if ($input.val() > 1) {

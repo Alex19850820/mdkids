@@ -281,10 +281,33 @@ add_action( 'authenticate', 'pu_blank_login');
 	     }
 	}
 	/**Locale*/
-add_filter( 'locale', 'set_my_locale' );
-function set_my_locale( $lang ) {
-	if ( 'ru' == $_GET['language'] )
-		return 'ru_RU';
-	else
-		return $lang;
-}
+//add_filter( 'locale', 'set_my_locale' );
+//function set_my_locale( $lang ) {
+//	if ( 'ru' == $_GET['language'] ) {
+//		if(!isset($_COOKIE['user_locale'])) {
+//			setcookie('user_locale', 'ru_RU');
+//		}
+//		$_COOKIE['user_locale'] = 'ru_RU';
+//		return 'ru_RU';
+//	}
+//	if ( 'en' == $_GET['language']) {
+//		if(!isset($_COOKIE['user_locale'])) {
+//			setcookie('user_locale', 'en_US');
+//		}
+//		$_COOKIE['user_locale'] = 'en_US';
+//		return 'en_US';
+//	}
+//	if($_COOKIE['user_locale']) {
+//		return $_COOKIE['user_locale'];
+//	}
+//}
+add_action('init', function(){
+	global $wpdb;
+	$user_ID = get_current_user_id();
+	if($user_ID) {
+		$table_name = $wpdb->prefix . 'user_settings';
+		$lang = $wpdb->get_results( "SELECT * FROM $table_name WHERE `user_id` = ".$user_ID." AND `key` = 'lang'  "  );
+		$lang = ($lang[0]->value == 'ru') ? 'ru_RU' : 'en_US';
+		switch_to_locale($lang ?? 'ru_RU');
+	}
+});

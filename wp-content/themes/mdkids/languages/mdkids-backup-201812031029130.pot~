@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mdkids\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-03 10:29+0000\n"
+"POT-Creation-Date: 2018-12-03 10:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -96,6 +96,7 @@ msgid "about company"
 msgstr ""
 
 #: header.php:117 header.php:137
+msgctxt "партнеры"
 msgid "partners"
 msgstr ""
 

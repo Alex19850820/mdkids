@@ -12,6 +12,10 @@
 // получаем объект пользователя с необходимыми данными
 $user_ID = get_current_user_id();
 $contacts = fw_get_db_customizer_option();
+if($_GET['language']) {
+	$lang = ($_GET['language'] == 'ru') ? 'ru_RU' : 'en_US';
+	switch_to_locale($lang);
+}
 $category = [];
 foreach (get_categories() as $item) {
 	if($item->slug != 'news'&&$item->name != 'Без рубрики' ){
@@ -25,7 +29,7 @@ if(isset($_GET['login']) && $_GET['login'] == 'failed')
 {
 	?>
 	<div id="login-error" style="background-color: #FFEBE8;border:1px solid #C00;padding:5px;">
-		<p>Ошибка входа: Не верно введен логил или пароль. Попробуйте еще раз.</p>
+		<p><?php esc_html_e('Login failed: Login or password entered incorrectly. Try again.', 'mdkids')?></p>
 	</div>
 	<?php
 }
@@ -40,7 +44,6 @@ if(isset($_GET['login']) && $_GET['login'] == 'failed')
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-<?php //esc_html_e('Plugins', 'mdkids');?>
 <header class="header">
 	<div class="header-contacts">
 		<div class="header-contacts__left">
@@ -61,12 +64,14 @@ if(isset($_GET['login']) && $_GET['login'] == 'failed')
 					<?php esc_html_e('Enter', 'mdkids')?>
 				</a>
 				<hr/>
-				<a href="#" class="jsReg">Регистрация</a>
+				<a href="#" class="jsReg">
+					<?php esc_html_e('Signup', 'mdkids')?>
+				</a>
 			</div>
 		<?php endif;?>
 		<?php if($user_ID):?>
 			<a class="login pc-login" href="/cabinet-profile">
-				Мой профиль
+				<?php esc_html_e('Cabinet Profile', 'mdkids')?>
 				<img src="assets/images/icons/black-male-user-symbol.svg" alt="" role="presentation"/>
 			</a>
 		<?php endif;?>
@@ -81,7 +86,7 @@ if(isset($_GET['login']) && $_GET['login'] == 'failed')
 			<?php if($user_ID):?>
 				<li class="mob-login">
 					<a class="login" href="/cabinet-profile">
-						Мой профиль
+						<?php esc_html_e('Cabinet Profile', 'mdkids')?>
 						<img src="assets/images/icons/black-male-user-symbol.svg" alt="" role="presentation"/>
 					</a>
 				</li>
@@ -89,26 +94,31 @@ if(isset($_GET['login']) && $_GET['login'] == 'failed')
 			<?php if(!$user_ID):?>
 				<li class="mob-login">
 					<a href="#" class="jsLogin">
-						Вход
+						<?php esc_html_e('Enter', 'mdkids')?>
 					</a>
 				</li>
 				<li class="mob-login">
 					<a href="#" class="jsReg">
-						Регистрация
+						<?php esc_html_e('Signup', 'mdkids')?>
 					</a>
 				</li>
 			<?php endif;?>
-			<li class="pc-item"><a href="/about-brand">о бренде</a>
+			<li class="pc-item">
+				<a href="/about-brand">
+					<?php esc_html_e('about brand','mdkids')?>
+				</a>
 			</li>
 			<li class="mob-item jsParentDropMenu">
-				<p class="jsDropOpen">о компании<img src="<?php bloginfo('template_url')?>/assets/images/arrow.png" alt=""/>
+				<p class="jsDropOpen">
+					<?php esc_html_e('about company','mdkids')?>
+					<img src="<?php bloginfo('template_url')?>/assets/images/arrow.png" alt=""/>
 				</p>
 				<ul class="drop-menu jsDropClose">
-					<li><a href="/about-brand">о бренде</a>
+					<li><a href="/about-brand"><?php esc_html_e('about brand','mdkids')?></a>
 					</li>
-					<li><a href="/partners">партнеры</a>
+					<li><a href="/partners"><?php esc_html_e('partners','mdkids')?></a>
 					</li>
-					<li><a href="/news">новости</a>
+					<li><a href="/news"><?php esc_html_e('news','mdkids')?></a>
 					</li>
 				</ul>
 			</li>
@@ -126,20 +136,20 @@ if(isset($_GET['login']) && $_GET['login'] == 'failed')
 					<?php endforeach;?>
 				</ul>
 			</li>
-			<li class="pc-item"><a href="/partners">партнеры</a>
+			<li class="pc-item"><a href="/partners"><?php esc_html_e('partners','mdkids')?></a>
 			</li>
-			<li class="pc-item"><a href="/news">новости</a>
+			<li class="pc-item"><a href="/news"><?php esc_html_e('news','mdkids')?></a>
 			</li>
-			<li><a href="/contacts">контакты</a>
+			<li><a href="/contacts"><?php esc_html_e('contacts','mdkids')?></a>
 			</li>
 		</ul><a href="/"><img src="<?php bloginfo('template_url')?>/assets/images/icons/logo.svg" alt="" role="presentation"/></a>
 		<div class="nav-menu__right">
 			<div class="nav-menu__right__land">
-				<select>
-					<option>
+				<select id="curLang" data-user="<?=$user_ID?>">
+					<option  <?=($_GET['language'] == 'ru') ? 'selected' : ''?> class="select-opt" value="ru">
 						Rus
 					</option>
-					<option>
+					<option  <?=($_GET['language'] == 'en') ? 'selected' : ''?> class="select-opt" value="en">
 						En
 					</option>
 				</select>

@@ -20,6 +20,8 @@ add_action( 'wp_ajax_addCurBasket', 'addCurBasket' );
 add_action( 'wp_ajax_nopriv_addCurBasket', 'addCurBasket' );
 add_action( 'wp_ajax_sendOrder', 'sendOrder' );
 add_action( 'wp_ajax_nopriv_sendOrder', 'sendOrder' );
+add_action( 'wp_ajax_settingsUser', 'settingsUser' );
+add_action( 'wp_ajax_nopriv_settingsUser', 'settingsUser' );
 //
 function get_next_page () {
 	 $blogQuery = new WP_Query( [
@@ -293,6 +295,47 @@ function sendOrder() {
 		// возвращаем результат
 		wp_send_json($result);
 	}
+	wp_die();
+}
+function settingsUser() {
+	global $wpdb;
+	if($_POST['user_id']) {
+		$table_name = $wpdb->prefix . 'user_settings';
+		//Проверяем на существование таблицы
+		if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+			// тут мы добавляем таблицу в базу данных
+			$sql = "	CREATE TABLE " . $table_name . " (
+					`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+					`user_id` int(10) unsigned NOT NULL,
+					`key` varchar(255) NOT NULL,
+					`value` varchar(255) NOT NULL,
+					PRIMARY KEY  (id),
+					UNIQUE KEY id (id)
+				);";
+			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+			dbDelta($sql);
+//		fw_print($wpdb->last_error);
+		}
+		$result = $wpdb->get_results( "SELECT * FROM $table_name WHERE `user_id` = ".$_POST['user_id']." AND `key` = '".$_POST['key']."' ");
+		
+		if($result) {
+			$wpdb->update($table_name, ['value' => $_POST['value']], ['user_id' => $_POST['user_id'], 'key' => $_POST['key']] );
+		}else {
+			$wpdb->insert( $table_name, ['user_id' => $_POST['user_id'],  'key' => $_POST['key'], 'value' => $_POST['value']], ['%d', '%s', '%s']);
+		}
+		$res = [
+			'result' => 'success',
+			'message' => 'Настройка добавлена!',
+			'value' => $_POST['value'],
+		];
+	} else {
+		$res = [
+			'result' => 'error',
+			'message' => 'Возникла ошибка при отправке запроса. Попробуйте позже!'
+		];
+	}
+	// возвращаем результат
+	wp_send_json($res);
 	wp_die();
 }
 ?>
